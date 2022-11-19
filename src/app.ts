@@ -140,7 +140,7 @@ app.put('/task/:id/:status', (req, res) => {
     }
   }
   return res.json({
-    message: 'Task updated :)', tasks
+    message: 'Task updated :)'
   });
 });
 
@@ -150,7 +150,7 @@ app.get('/task/:title', (req, res) => {
   let str = req.params.title;
   let title = str.replace("-"," ");
   let searchArr = tasks.filter((item)=>{
-    return item.title.toLowerCase() === title;
+    return item.title.toLowerCase().includes(title);
   })
   return res.json(searchArr);
 });
