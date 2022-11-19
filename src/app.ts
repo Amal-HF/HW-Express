@@ -126,12 +126,17 @@ app.delete('/task/:id', (req, res) => {
 });
 
 // Change the task status as done or not done
+// you must determine tha id of the task then set its status param to be true if it is done or false otherwise
 app.put('/task/:id/:status', (req, res) => {
   const tID = req.params.id;
-  const status = req.params.status.replace('-',' ');
+  const status = req.params.status;
   for (let i=0; i<tasks.length; i++){
     if(tasks[i].id == tID){
-      tasks[i].status = status;
+      if (status === "true"){
+         tasks[i].status = "done";
+      } else if (status === "false"){
+         tasks[i].status = "not done";
+      }
     }
   }
   return res.json({
@@ -140,6 +145,7 @@ app.put('/task/:id/:status', (req, res) => {
 });
 
 // Search for a task by given title
+// if titlr more than one word, sprate it with -
 app.get('/task/:title', (req, res) => {
   let str = req.params.title;
   let title = str.replace("-"," ");
