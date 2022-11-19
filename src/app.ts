@@ -27,11 +27,11 @@ app.post('/name', (req, res) => {
 app.put('/name/:id', (req, res) => {
   let updated = req.body as IPeople;
   let pID = req.params.id;
-  let newArr = people.filter((item) => {
-    return item.id !== pID; 
-  });
-  people = newArr;
-  people.push(updated);
+  for (let i=0; i<people.length; i++){
+    if(people[i].id == pID){
+      people[i]=updated
+    }
+  }
   return res.json({
     message: 'Name updated :)',
   });
@@ -39,10 +39,11 @@ app.put('/name/:id', (req, res) => {
 
 app.delete('/name/:id', (req, res) => {
   const pID = req.params.id;
-  let newArr = people.filter((item)=>{
-    return item.id !== pID;
-  });
-  people = newArr;
+  for (let i=0; i<people.length; i++){
+    if(people[i].id==pID){
+      people.splice(i, 1);
+    }
+  }
   return res.json({
     message: 'Name deleted :)'
   })
@@ -64,11 +65,11 @@ app.post('/grade', (req, res) => {
 app.put('/grade/:id', (req, res) => {
   let updated = req.body as IGrade;
   let gID = req.params.id;
-  let newArr = grades.filter((item) => {
-    return item.id !== gID; 
-  });
-  grades = newArr;
-  grades.push(updated);
+  for (let i=0; i<grades.length; i++){
+    if(grades[i].id == gID){
+      grades[i]=updated
+    }
+  }
   return res.json({
     message: 'Grade updated :)',
   });
@@ -76,10 +77,11 @@ app.put('/grade/:id', (req, res) => {
 
 app.delete('/grade/:id', (req, res) => {
   const gID = req.params.id;
-  let newArr = grades.filter((item)=>{
-    return item.id !== gID;
-  });
-  grades = newArr;
+  for (let i=0; i<grades.length; i++){
+    if(grades[i].id==gID){
+      grades.splice(i, 1);
+    }
+  }
   return res.json({
     message: 'Grade deleted :)'
   })
@@ -101,11 +103,11 @@ app.post('/task', (req, res) => {
 app.put('/task/:id', (req, res) => {
   let updated = req.body as ITask;
   let tID = req.params.id;
-  let newArr = tasks.filter((item) => {
-    return item.id !== tID; 
-  });
-  tasks = newArr;
-  tasks.push(updated);
+  for (let i=0; i<tasks.length; i++){
+    if(tasks[i].id == tID){
+      tasks[i]=updated
+    }
+  }
   return res.json({
     message: 'Task updated :)',
   });
@@ -113,26 +115,27 @@ app.put('/task/:id', (req, res) => {
 
 app.delete('/task/:id', (req, res) => {
   const tID = req.params.id;
-  let newArr = tasks.filter((item)=>{
-    return item.id !== tID;
-  });
-  tasks = newArr;
+  for (let i=0; i<tasks.length; i++){
+    if(tasks[i].id==tID){
+      tasks.splice(i, 1);
+    }
+  }
   return res.json({
     message: 'Task deleted :)'
   })
 });
 
 // Change the task status as done or not done
-app.put('/task/:id', (req, res) => {
-  let updated = req.body as ITask;
-  let tID = req.params.id;
-  let newArr = tasks.filter((item) => {
-    return item.id !== tID; 
-  });
-  tasks = newArr;
-  tasks.push(updated);
+app.put('/task/:id/:status', (req, res) => {
+  const tID = req.params.id;
+  const status = req.params.status.replace('-',' ');
+  for (let i=0; i<tasks.length; i++){
+    if(tasks[i].id == tID){
+      tasks[i].status = status;
+    }
+  }
   return res.json({
-    message: 'Task updated :)',
+    message: 'Task updated :)', tasks
   });
 });
 
